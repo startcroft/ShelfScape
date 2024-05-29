@@ -1,0 +1,53 @@
+{
+    "usuarios": [
+      {
+        "id": 1,
+        "nombre": "Juan Perez",
+        "correo_electronico": "juan.perez@example.com",
+        "contrasena": "hashed_password",
+        "fecha_registro": "2024-05-16T00:00:00Z"
+      },
+      {
+        "id": 2,
+        "nombre": "Maria Lopez",
+        "correo_electronico": "maria.lopez@example.com",
+        "contrasena": "hashed_password",
+        "fecha_registro": "2024-05-17T00:00:00Z"
+      }
+    ],
+    "intereses": [
+      {
+        "id": 1,
+        "id_usuario": 1,
+        "nombre": "Programación",
+        "descripcion": "Intereses relacionados con la programación.",
+        "imagen": "http://example.com/imagen_juan.jpg"
+      },
+      {
+        "id": 2,
+        "id_usuario": 2,
+        "nombre": "Programación",
+        "descripcion": "Intereses en la programación y desarrollo.",
+        "imagen": "http://example.com/imagen_maria.jpg"
+      }
+    ],
+    "contenidos": [
+      {
+        "id": 1,
+        "id_interes": 1,
+        "titulo": "Curso de Python",
+        "descripcion": "Un curso completo sobre Python.",
+        "url_contenido": "http://example.com/curso-python",
+        "tipo_contenido": "Video"
+      },
+      {
+        "id": 2,
+        "id_interes": 2,
+        "titulo": "Tutorial de JavaScript",
+        "descripcion": "Un tutorial sobre JavaScript.",
+        "url_contenido": "http://example.com/tutorial-js",
+        "tipo_contenido": "Blog"
+      }
+    ]
+  }
+  

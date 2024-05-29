@@ -1,0 +1,15 @@
+.newInterest{
+    background-color: #ffbd59;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: .9375rem;
+    border-radius: .625rem;
+    width: 18.75rem;
+
+    &__img{
+        width: 2.5rem;
+    }
+}

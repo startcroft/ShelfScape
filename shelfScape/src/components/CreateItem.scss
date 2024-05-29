@@ -1,0 +1,40 @@
+.newItem{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+    &__form{
+        background-color: #ffbd59;
+        padding: 3.75rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: .625rem;
+        border-radius: .9375rem;
+
+        &--title{
+            border-radius: .625rem;
+            font-weight: bold;
+            font-size: .9375rem;
+            height: 1.8125rem;
+            width: 11.25rem;
+        }
+
+        &--textArea{
+            border-radius: .625rem;
+            width: 11.25rem;
+            height: 5rem;
+        }
+
+        &--button{
+            padding: .625rem;
+            border-radius: .625rem;
+            font-weight: bold;
+            color: white;
+            background-color: #0097b2;
+            font-size: .9375rem;
+        }
+    }
+}
