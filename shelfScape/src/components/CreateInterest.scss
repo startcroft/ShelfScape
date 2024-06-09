@@ -7,7 +7,9 @@
     align-items: center;
     gap: .9375rem;
     border-radius: .625rem;
-    width: 18.75rem;
+    width: 25rem;
+    z-index: 10;
+    border: 1px solid black;
 
     &__img{
         width: 2.5rem;
