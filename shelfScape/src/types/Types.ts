@@ -22,3 +22,9 @@ export interface interest {
   nombre: string;
  imagenURL: string
 }
+
+export interface CreateInterestProps {
+  modalState: () => void;
+  interestModified: interest | null
+  
+}

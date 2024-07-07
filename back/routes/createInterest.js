@@ -1,26 +1,23 @@
 const router = require("express").Router();
 const { jsonResponse } = require("../lib/jsonResponse");
+const InteresSchema = require("../schema/InteresSchema");
 const User = require("../schema/User");
 
 router.post("/:id/intereses", async(req, res) => {
-    try {
-        const usuario = await User.findById(req.params.id);
-        if (!usuario) {
-          return res.status(404).send({ error: 'Usuario no encontrado' });
-        }
+  try {
+      const usuario = await User.findById(req.params.id);
+      if (!usuario) {
+        return res.status(404).send({ error: 'Usuario no encontrado' });
+      }
 
-        console.log("Es la ruta correcta")
+      const {nombre, imagenURL, contenidos} = req.body;
+      const userId = req.params.id;
+      const newInterest = new InteresSchema({nombre, imagenURL, contenidos, userId})
     
-        // const nuevoInteres = {
-        //   interesID: new mongoose.Types.ObjectId(),
-        //   nombre: req.body.nombre,
-        //   imagenURL: req.body.imagenURL || '',
-        //   contenidos: req.body.contenidos || []
-        // };
-    
-        // User.intereses.push(nuevoInteres);
-        // await User.save();
-        res.status(201);
+      await newInterest.save();
+                  // Pendiente añadir mensaje para mostrar cuando un interest se añadió con exito
+
+      res.status(201).json({ message: "Interest added sucessfully!"});
       } catch (error) {
         res.status(400).send(error);
       }

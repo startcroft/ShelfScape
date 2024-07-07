@@ -1,58 +1,61 @@
 import { useState } from 'react'
 import { useAuth } from './AuthProvider';
 import { API_URL } from './constants';
-import './CreateInterest.scss'
+import { CreateInterestProps } from '../types/Types';
+import './CreateInterest.scss';
 
-export const CreateInterest = () => {
-    const [interestName, setInterestName] = useState("");
-    const [image, setImage] = useState<File | null>(null);
+export const CreateInterest: React.FC<CreateInterestProps> = ({modalState, interestModified}) => {
+    const [interestName, setInterestName] = useState(interestModified ? interestModified.nombre : "");
+    const [image, setImage] = useState<string | null>(interestModified ? interestModified.imagenURL : null);
     const auth = useAuth();
-
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
+    
         const nuevoInteres = {
-            nombre: interestName,
-            imagenURL: image ? URL.createObjectURL(image) : null,
-            contenidos: []
+          nombre: interestName,
+          imagenURL: image,
+          contenidos: []
         };
-
+    
         try {
-            const response = await fetch(`${API_URL}/usuarios/${auth.data?._id}/intereses`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(nuevoInteres),
-            });
-
-            if (response.ok) {
-                console.log('Interés agregado exitosamente');
-                // Maneja la respuesta exitosa
-            } else {
-                console.error('Error al agregar el interés');
-                // Maneja el error
-            }
+          const response = await fetch(`${API_URL}/usuarios/${auth.data?._id}/intereses`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(nuevoInteres),
+          });
+    
+          if (response.ok) {
+            modalState();
+            console.log("Interest added");
+            // Maneja la respuesta exitosa
+          } else {
+            console.log(`Error: ${response.statusText}`);
+            // Maneja la respuesta de error del servidor
+          }
         } catch (error) {
-            console.error('Error en la solicitud:', error);
-            // Maneja el error
+          console.error("Fetch error: ", error);
+          // Maneja los errores de la solicitud fetch
         }
+        
     };
 
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files.length > 0) {
-            setImage(e.target.files[0]);
-        }
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+            setImage(e.target.value);
     };
     return(
         <form className="newInterest" onSubmit={handleSubmit}>
-            <img className="newInterest__img"  src={image ? URL.createObjectURL(image) : "src/assets/uploadImage.jpg"} alt="upload image" />
+            <img className="newInterest__img"  src={image ? image : "src/assets/uploadImage.jpg"} alt="upload image" />
             <input className="newInterest__input" type="text" placeholder='Interest name' value={interestName} onChange={(e) => setInterestName(e.target.value)}/>
             <input 
-                type="file" 
-                onChange={handleFileChange}
+                placeholder='Add the of the image'
+                type="text" 
+                onChange={handleImageChange}
             />
-            <button className='newInterest__button' type="submit">Add</button>
+
+            {interestModified ? <button className='newInterest__button'>Editar</button> : <button className='newInterest__button' type="submit" >Add</button>}
+            
         </form>
 
     )
