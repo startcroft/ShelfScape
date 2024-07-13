@@ -1,11 +1,13 @@
 import { useContext, createContext, useState, ReactNode } from "react";
-import { AuthResponse, User } from "../types/Types";
+import { AuthResponse, User, SelectedInterest } from "../types/Types";
 
 interface AuthContextType {
     isAuthenticated: boolean;
     saveUser: (userData: AuthResponse) => void;
+    saveInterest: (Interest: SelectedInterest) => void;
     data: User | null;
     closeSection: () => void;
+    selectedInterest: SelectedInterest | null
 }
 
 interface AuthProviderProps {
@@ -15,18 +17,25 @@ interface AuthProviderProps {
 const AuthContext = createContext<AuthContextType>({
     isAuthenticated: false,
     saveUser: () => {},
+    saveInterest: () => {},
     data: null,
     closeSection: () => {},
+    selectedInterest: null
 });
 
 export function AuthProvider({ children }: AuthProviderProps) {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [data, setData] = useState<User | null>(null);
+    const [selectedInterest, setSelectedInterest] = useState<SelectedInterest | null>(null)
 
     function saveUser(userData: AuthResponse) {
         console.log("Saving user data:", userData.body.user);  // Log user data being saved
         setData(userData.body.user);
         setIsAuthenticated(true);
+    }
+
+    function saveInterest(interest: SelectedInterest){
+        setSelectedInterest(interest)
     }
 
     function closeSection(){
@@ -35,7 +44,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, saveUser, data, closeSection }}>
+        <AuthContext.Provider value={{ isAuthenticated, saveUser, data, closeSection, selectedInterest, saveInterest}}>
             {children}
         </AuthContext.Provider>
     );

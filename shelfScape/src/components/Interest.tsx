@@ -4,6 +4,7 @@ import './Interest.scss'
 import { useAuth } from './AuthProvider'
 import { interest } from '../types/Types'
 import { API_URL } from './constants'
+import { useNavigate } from 'react-router-dom'
 
 export const Interest = () => {
     const [activeModal, setActiveModal] = useState(false);
@@ -11,6 +12,7 @@ export const Interest = () => {
     const [interest, setInterest] = useState<interest[]>([]);
     const [updatedState, setUpdateState] = useState(false);
     const [editInterest, setEditInterest] = useState<interest | null>(null);
+    const navigate = useNavigate()
     const auth = useAuth()
 
     useEffect(() => {
@@ -52,6 +54,10 @@ export const Interest = () => {
         console.log(editInterest)
     }
 
+    const editReset = () => {
+        setEditInterest(null)
+    }
+
     const changeState = () => {
         setUpdateState(prevState => !prevState)
     }
@@ -85,6 +91,25 @@ export const Interest = () => {
             setHoveredInterestId(null)
         }
 
+        const handleView = async (id: string) =>{
+            try {
+                const response = await fetch(`${API_URL}/intereses/view/${id}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                if(response.ok){
+                    const json = await response.json();
+                    console.log(json.body);
+                    auth.saveInterest(json.body);
+                    navigate('/Items');
+                }
+            } catch (error) {
+                console.error(error)
+            }
+        }
+
         const handleCloseSection = () => {
             auth.closeSection()
         }
@@ -106,7 +131,7 @@ export const Interest = () => {
 
                 {activeModal &&
                     <div className='createInterestContainer'>
-                        <CreateInterest modalState={handleChange} interestModified={editInterest}/>
+                        <CreateInterest modalState={handleChange} interestModified={editInterest} editReset={editReset}/> 
                     </div>}
 
                 <main className="mainInterest">
@@ -122,7 +147,7 @@ export const Interest = () => {
                                     <div className='interest__options'>
                                         <button className='interest_options--edit' onClick={() => handleEditInterest(interest._id)}><img src="src/assets/pencil.svg" alt="edit" /></button>
                                         <button className='interest_options--delete' onClick={() => handleDelete(interest._id)}><img src="src/assets/trash.svg" alt="delete" /></button>
-                                        <button className='interest_options--view'><img src="src/assets/eye.svg" alt="view" /></button>
+                                        <button className='interest_options--view' onClick={() => {handleView(interest._id)}}><img src="src/assets/eye.svg" alt="view" /></button>
                                     </div>}
                                 <img className="mainInterest__section--img" src={interest.imagenURL} alt="Literature" />
                                 <span className="mainInterest__section--span">{interest.nombre}</span>

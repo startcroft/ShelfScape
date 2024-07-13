@@ -25,16 +25,16 @@ const router = createBrowserRouter([
       {
         path: "/Interest",
         element: <Interest />
+      },
+      {
+        path: "/Items",
+        element: <Items />
+      },
+      {
+        path: "/CreateItem",
+        element: <CreateItem></CreateItem>
       }
     ]
-  },
-  {
-    path: "/Items",
-    element: <Items />
-  },
-  {
-    path: "/CreateItem",
-    element: <CreateItem></CreateItem>
   }
 ])
 

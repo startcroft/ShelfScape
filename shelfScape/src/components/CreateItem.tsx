@@ -1,7 +1,10 @@
+import { useState } from 'react';
 import './CreateItem.scss'
 
 export const CreateItem = () => {
-
+  const [name, setName] = useState("");
+  const [link, setLink] = useState("");
+  
   return (
     <>
       <div className='newItem'>

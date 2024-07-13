@@ -4,10 +4,30 @@ export interface AuthResponse {
   }
 }
 
+export interface InterestResponse {
+  body: {
+    interes: interest
+  }
+}
+
+export interface ItemsResponse {
+  body: {
+    item: [item]
+  }
+}
+
 export interface AuthResponseError {
     body: {
         error: string
     };
+}
+
+export interface SelectedInterest {
+  _id: string;
+  nombre: string;
+  imagenURL: string;
+  userId: string
+  contenidos: [];
 }
 
 export interface User {
@@ -23,8 +43,15 @@ export interface interest {
  imagenURL: string
 }
 
+export interface item {
+  id: string;
+  name: string;
+  link: string;
+  date: string;
+}
+
 export interface CreateInterestProps {
   modalState: () => void;
   interestModified: interest | null
-  
+  editReset: () => void
 }

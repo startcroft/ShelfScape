@@ -20,6 +20,7 @@ main().catch(console.error);
 app.use('/api/login', require('./routes/login.js'));
 app.use('/api/usuarios', require('./routes/createInterest.js'));
 app.use('/api/intereses', require('./routes/Interest.js'))
+app.use('/api/items', require('./routes/Item.js'))
 
 app.get('/', (req, res) => {
     res.send('Hello world!')
