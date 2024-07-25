@@ -27,7 +27,7 @@ export interface SelectedInterest {
   nombre: string;
   imagenURL: string;
   userId: string
-  contenidos: [];
+  contenidos: item[];
 }
 
 export interface User {

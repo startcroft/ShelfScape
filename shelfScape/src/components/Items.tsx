@@ -35,7 +35,32 @@ export const Items = () => {
         fetchItems();
         console.log(items)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [updateItems]);
+    }, [auth.selectedInterest, updateItems]);
+
+    const handleEditItem = (id:string) => {
+        auth.handleItemId(id);
+        navigate('../CreateItem');
+    }
+
+    const handleDelete = async(id: string) => {
+        // console.log(id);
+      try {
+        const response = await fetch(`${API_URL}/items/delete/${auth.selectedInterest?._id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'Application/json'
+            },
+            body: JSON.stringify({ id })
+        })
+        if(response.ok){
+            setUpdateItems(prevState => !prevState)
+            console.log('Item eliminado con exito.')
+        }
+      } catch (error) {
+        console.error(error);
+        
+      }
+    }
 
     return (
         <>
@@ -60,8 +85,8 @@ export const Items = () => {
                         <section className='mainItems__li--sectionTwo'>
                            <span className='sectionTwo__link'>{item.link}</span>
                            <div className='sectionTwo__buttons'>
-                            <button className='sectionTwo__buttons--edit'>Edit</button>
-                            <button className='sectionTwo__buttons--delete'>Delete</button>
+                            <button className='sectionTwo__buttons--edit' onClick={() => {handleEditItem(item.id)}}>Edit</button>
+                            <button className='sectionTwo__buttons--delete' onClick={() => {handleDelete(item.id)}}>Delete</button>
                            </div>
                         </section>
                     </li>

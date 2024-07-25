@@ -7,7 +7,7 @@ const InteresSchema = new Schema({
   descripcion: { type: String },
   imagenURL: { type: String },
   userId: { type: String, required: true},
-  contenidos: []
+  contenidos: [ContenidoSchema]
 });
 
 const Interes = mongoose.model('InteresSchema', InteresSchema);

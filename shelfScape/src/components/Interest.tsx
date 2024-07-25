@@ -33,7 +33,13 @@ export const Interest = () => {
         }
 
         fetchInterest();
-    }, [auth.data?._id, activeModal, updatedState])
+    }, [auth.data?._id, activeModal, updatedState]);
+
+    // useEffect(() => {
+    //   return () => {
+
+    //   }
+    // }, [])
 
     const handleChange = () => {
         setActiveModal(prevState => !prevState)
