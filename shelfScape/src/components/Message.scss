@@ -1,0 +1,16 @@
+.messageContainer{
+    border-radius: 5px;
+    width: 56.25rem;
+    height: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 280px;
+    z-index: 20;
+
+    p{
+        font-family: "Lato", sans-serif;
+        color: white;
+    }
+}

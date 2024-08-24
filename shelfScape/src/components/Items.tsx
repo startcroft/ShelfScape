@@ -2,14 +2,16 @@ import './Items.scss'
 import { useAuth } from './AuthProvider'
 import { useEffect, useState } from 'react';
 import { API_URL } from './constants';
-import { item } from '../types/Types'
+import { item, messageProps } from '../types/Types'
 import { useNavigate } from 'react-router-dom';
+import { Message } from './Message';
 
 export const Items = () => {
     const [items, setItems] = useState<item[]>([]);
     const [updateItems, setUpdateItems] = useState(false);
     const auth = useAuth();
     const navigate = useNavigate();
+    const [message, setMesagge] = useState< messageProps | null | {text: string , type: 'success' | 'error'} >();
 
     useEffect(() => {
         const interestSelected = auth.selectedInterest;
@@ -24,7 +26,6 @@ export const Items = () => {
 
                 if (response.ok) {
                     const json = await response.json()
-                    // console.log(json)
                     setItems(json.body.itemsList)
 
                 }
@@ -37,13 +38,34 @@ export const Items = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [auth.selectedInterest, updateItems]);
 
+    useEffect (() => {
+      if(auth.message){
+        setMesagge(auth.message);
+      }
+    }, [auth.message]);
+
+    useEffect(() => {
+       if(message){
+        const timmer = setTimeout(() => {
+            setMesagge(null);
+        }, 3000);
+
+        return () => {clearTimeout(timmer)}
+       }
+
+       
+    }, [message]);
+
+    const handleback = () => {
+        navigate('../Interest');
+    }
+
     const handleEditItem = (id:string) => {
         auth.handleItemId(id);
         navigate('../CreateItem');
     }
 
     const handleDelete = async(id: string) => {
-        // console.log(id);
       try {
         const response = await fetch(`${API_URL}/items/delete/${auth.selectedInterest?._id}`, {
             method: 'PATCH',
@@ -53,11 +75,14 @@ export const Items = () => {
             body: JSON.stringify({ id })
         })
         if(response.ok){
-            setUpdateItems(prevState => !prevState)
-            console.log('Item eliminado con exito.')
+            setUpdateItems(prevState => !prevState);
+            setMesagge({text:'Item deleted', type:'success'});
+        }
+        else {
+            setMesagge({text:'Item cannot be deleted', type:'error'});
         }
       } catch (error) {
-        console.error(error);
+        auth.handleMesage('Error en la transacción.', 'error');
         
       }
     }
@@ -66,7 +91,12 @@ export const Items = () => {
         <>
             <main className='mainItems'>
                 <section className='mainItems__section'>
-                    <button onClick={() => {navigate('../CreateItem')}}>
+
+                <button className='mainLogin__buttonBack' onClick={handleback}>
+                    <img src="../src/assets/back.svg" alt="back" />
+                </button>
+
+                    <button className='mainItems__section--addButton' onClick={() => {navigate('../CreateItem')}}>
                     <span className='mainItems__section--span'>Add item</span>
                     <svg className="mainItems__section--svg" xmlns="http://www.w3.org/2000/svg" width="50" height="30" fill="currentColor" viewBox="0 0 16 16">
                         <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
@@ -74,6 +104,8 @@ export const Items = () => {
                     </svg>
                     </button>
                 </section>
+
+                { message && <Message text={message.text} type={message.type}/>}
                 <ul className='mainItems__ul'>
                     {
                       items.map(item =>

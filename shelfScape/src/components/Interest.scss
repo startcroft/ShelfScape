@@ -1,9 +1,13 @@
 body {
     background-color: #b9d4d8;
+    position: relative;
+    // padding: 1.875rem;
+    margin: 0;
 }
 
 .interestContainer {
     position: relative;
+    padding: 1.875rem;
 }
 
 .headerInterest {
@@ -11,12 +15,41 @@ body {
     justify-content: space-between;
     align-items: center;
     gap: .625rem;
-    padding: 1.25rem;
+    padding-left: .9375rem;
+    padding-right: .9375rem;
+    padding-bottom: 1.25rem;
 
-    .headerIneterest__h2 {
-        font-family: sans-serif
+        &__closeButton{
+            padding: .3125rem;
+            font-size: 1.125rem;
+            background-color: #ffbd59;
+            font-weight: 600;
+            border: none;
+            border-radius: 15px;
+    
+            &:hover{
+                background-color: black;
+                color: white;
+            }
+        }
+    
+        
+    
+        &__addButton{
+           padding: .625rem;
+           background-color: #ffbd59;
+           border-radius: 15px;
+           border: none;
+            .headerIneterest__h2 {
+                font-family: sans-serif
+            }
+    
+            &:hover{
+                background-color: black;
+                color: white;
+            }
+        }
     }
-}
 
 .mainInterest {
     display: flex;
@@ -27,7 +60,7 @@ body {
 
     .interest__options {
         background-color: rgba(0, 0, 0, .3);
-        width: 25.8125rem;
+        width: 24.6875rem;
         height: 10.1875rem;
         display: flex;
         justify-content: center;
@@ -78,6 +111,7 @@ body {
             font-family: sans-serif;
             font-weight: bold;
             font-size: 1.25rem;
+            text-align: center;
         }
     }
 }
@@ -87,8 +121,56 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    top: -0.8125rem;
+    top: 0;
+    left: 0;
     background-color: rgba(0, 0, 0, .4);
     width: 100vw;
     height: 100vh;
+    z-index: 30;
+    overflow: hidden;
+}
+
+
+@media (max-width: 480px) {
+
+    .interestContainer{
+        padding: 0;
+    }
+    .headerInterest{
+        padding: 0;
+        justify-content: space-evenly;
+        align-items: center;
+        gap: 0;
+        margin-bottom: .9375rem;
+
+        &__closeButton{
+            font-size: .9375rem;
+        }
+
+        &__addButton{
+            .headerIneterest__h2 {
+                font-size: .9375rem;
+            }
+        }
+    }
+
+    .mainInterest{
+
+        flex-direction: column;
+        align-items: center;
+        &__section{
+            width: 15.625rem;
+
+            &--img{
+               width: 5rem;
+               height: 5rem;
+            }
+
+            &--span{
+               font-size: .9375rem;
+            }
+        }
+    }
+
+   
 }

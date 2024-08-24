@@ -12,9 +12,13 @@ export const Login = () => {
     const auth = useAuth();
     const navigate = useNavigate();
 
-    async function handleSubmit (e: React.FormEvent<HTMLFormElement>) {
+    const handleback = () => {
+        navigate('../');
+    }
+
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-    
+
         try {
             const response = await fetch(`${API_URL}/login`, {
                 method: "POST",
@@ -27,7 +31,7 @@ export const Login = () => {
                 })
             });
 
-            if(response.ok){
+            if (response.ok) {
                 console.log("Login success");
                 const json = (await response.json()) as AuthResponse;
                 console.log("AuthResponse:", json);  // Log response for debugging
@@ -44,13 +48,16 @@ export const Login = () => {
         }
     }
 
-    if(auth.isAuthenticated) {
+    if (auth.isAuthenticated) {
         return <Navigate to="/Interest" />;
     }
-    
+
     return (
         <>
             <main className='mainLogin'>
+                <button className='mainLogin__buttonBack' onClick={handleback}>
+                    <img src="../src/assets/back.svg" alt="back" />
+                </button>
                 {errorResponse && <p>{errorResponse}</p>}
                 <form className='logForm' onSubmit={handleSubmit}>
                     <input

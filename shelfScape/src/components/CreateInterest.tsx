@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react'
 import { useAuth } from './AuthProvider';
 import { API_URL } from './constants';
 import { CreateInterestProps } from '../types/Types';
+import { Message } from './Message';
 import './CreateInterest.scss';
 
 export const CreateInterest: React.FC<CreateInterestProps> = ({ modalState, interestModified, editReset }) => {
   const [interestName, setInterestName] = useState("");
   const [image, setImage] = useState<string | null>(null);
-  // const [loading, setLoading] = useState(false);
-  // const [error, setError] = useState<string | null>(null);
+  const [message, setMessage] = useState<{ text: string, type: 'success' | 'error' } | null>(null);
+  
   const auth = useAuth();
 
   useEffect(() => {
@@ -27,6 +28,7 @@ export const CreateInterest: React.FC<CreateInterestProps> = ({ modalState, inte
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setMessage(null);
     // setLoading(true);
     // setError(null);
 
@@ -62,11 +64,14 @@ export const CreateInterest: React.FC<CreateInterestProps> = ({ modalState, inte
           setImage(null);
         }
         editReset();
+        // setMessage({ text: 'Interest addes successfully!', type: 'success'});
+        interestModified ? auth.handleMesage('Interest edited successfully!', 'success') : 
+        auth.handleMesage('Interest added successfully!', 'success')
       } else {
         // setError(`Error: ${response.statusText}`);
       }
     } catch (error) {
-      console.error("Fetch error: ", error);
+      auth.handleMesage('Error en la transacción.', 'error');
     } finally {
       // setLoading(false);
     }
@@ -84,8 +89,10 @@ export const CreateInterest: React.FC<CreateInterestProps> = ({ modalState, inte
     />
 
     {interestModified ? <button className='newInterest__button'>Editar</button> : <button className='newInterest__button' type="submit" >Add</button>}
+    {message && <Message text={message.text} type={message.type}/>}
     
 </form>
+
   );
 };
 

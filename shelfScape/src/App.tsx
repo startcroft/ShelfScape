@@ -9,6 +9,13 @@ const App = () => {
     event.preventDefault()
     navigate("/Login")
   }
+
+  const handleSignUp = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+    navigate("/SignUp")
+  }
+
+
   return (
     <>
       <div className='home'>
@@ -18,7 +25,7 @@ const App = () => {
         <p className='home__section--p'>where you can store all your information in a more organized way.</p>
         <div className='containerButton'>
           <button onClick={handleLogin} className='containerButton__button'>Login</button>
-          <button className='containerButton__button'>Sign in</button>
+          <button onClick={handleSignUp} className='containerButton__button'>Sign in</button>
         </div>
         </section>
       </div>

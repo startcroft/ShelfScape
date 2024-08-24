@@ -4,6 +4,11 @@ export interface AuthResponse {
   }
 }
 
+export interface messageProps {
+  text: string;
+  type: string;
+}
+
 export interface InterestResponse {
   body: {
     interes: interest

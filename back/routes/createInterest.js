@@ -15,7 +15,6 @@ router.post("/:id/intereses", async(req, res) => {
       const newInterest = new InteresSchema({nombre, imagenURL, contenidos, userId})
     
       await newInterest.save();
-                  // Pendiente añadir mensaje para mostrar cuando un interest se añadió con exito
 
       res.status(201).json({ message: "Interest added sucessfully!"});
       } catch (error) {

@@ -1,0 +1,53 @@
+.mainSignUp {
+
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url(../assets/biblioteca.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+
+    &__button {
+        position: absolute;
+        top: .9375rem;
+        left: .9375rem;
+        background-color: transparent;
+        border: none;
+        img{
+          width: 3.125rem;
+          width: 3.125rem;
+        }
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        background-color: #b9d4d8;
+        gap: .9375rem;
+        padding: 2.5rem;
+        border-radius: .9375rem;
+        justify-content: center;
+        align-items: center;
+
+        input {
+            border-radius: .625rem;
+            height: 1.5625rem;
+            padding: .25rem;
+            width: 10.625rem;
+        }
+
+        .emailInput {
+            width: 15.625rem;
+        }
+
+        button {
+            margin-top: .9375rem;
+            font-weight: bold;
+            background-color: white;
+            width: 10.625rem;
+        }
+    }
+}

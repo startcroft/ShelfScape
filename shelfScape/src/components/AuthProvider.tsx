@@ -1,5 +1,5 @@
 import { useContext, createContext, useState, ReactNode } from "react";
-import { AuthResponse, User, SelectedInterest } from "../types/Types";
+import { AuthResponse, User, SelectedInterest, messageProps} from "../types/Types";
 
 interface AuthContextType {
     isAuthenticated: boolean;
@@ -10,6 +10,8 @@ interface AuthContextType {
     selectedInterest: SelectedInterest | null;
     itemToEdit: string | null;
     handleItemId: (id: string) => void;
+    message: messageProps | null;
+    handleMesage: (text: string, type: string) => void;
 }
 
 interface AuthProviderProps {
@@ -24,7 +26,9 @@ const AuthContext = createContext<AuthContextType>({
     closeSection: () => {},
     selectedInterest: null,
     itemToEdit: null,
-    handleItemId: () => {}
+    handleItemId: () => {},
+    message: null,
+    handleMesage: () => {}
 });
 
 export function AuthProvider({ children }: AuthProviderProps) {
@@ -32,12 +36,17 @@ export function AuthProvider({ children }: AuthProviderProps) {
     const [data, setData] = useState<User | null>(null);
     const [selectedInterest, setSelectedInterest] = useState<SelectedInterest | null>(null);
     const [itemToEdit, setItemToEdit] = useState<string | null>(null);
+    const [message, setMessage] = useState<messageProps | null>(null);
 
     function saveUser(userData: AuthResponse) {
         console.log("Saving user data:", userData.body.user);  // Log user data being saved
         setData(userData.body.user);
         setIsAuthenticated(true);
-    } 
+    }
+
+    function handleMesage(text: string, type: string){
+        setMessage({text: text, type: type});
+    }
 
     function handleItemId(id: string) {
         if(id === 'noID'){
@@ -58,7 +67,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, saveUser, data, closeSection, selectedInterest, saveInterest, itemToEdit, handleItemId}}>
+        <AuthContext.Provider value={{ isAuthenticated, saveUser, data, closeSection, selectedInterest, saveInterest, itemToEdit, handleItemId, message, handleMesage}}>
             {children}
         </AuthContext.Provider>
     );

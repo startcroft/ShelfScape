@@ -18,6 +18,7 @@ async function main() {
 main().catch(console.error);
 
 app.use('/api/login', require('./routes/login.js'));
+app.use('/api/signUp', require('./routes/SignUp.js'))
 app.use('/api/usuarios', require('./routes/createInterest.js'));
 app.use('/api/intereses', require('./routes/Interest.js'))
 app.use('/api/items', require('./routes/Item.js'))

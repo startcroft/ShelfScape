@@ -6,6 +6,7 @@ import { Login }  from './components/Login.tsx'
 import { Interest } from './components/Interest.tsx'
 import { Items } from './components/Items.tsx'
 import { CreateItem } from './components/CreateItem.tsx'
+import { SignUp } from './components/SignUp.tsx'
 import { AuthProvider } from './components/AuthProvider.tsx'
 import ProtectedRouter from './components/ProtectedRouter.tsx'
 
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
   {
     path: "/Login",
     element: <Login />
+  },
+  {
+    path: "/SignUp",
+    element: <SignUp />
   },
   {
     path: "/",
