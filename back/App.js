@@ -30,3 +30,14 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`)
 });
+
+trasnformations = {}
+
+for(let i = 0; i < from.length; i++){
+    const fromLetter = from[i];
+    const toLetter = to[i];
+
+const storedLetter = transformations[fromLetter]
+if (storedLetter && storedLetter !== toLetter) return false
+transformatios[fromLetter] = toLetter
+}
