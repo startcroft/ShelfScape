@@ -80,6 +80,7 @@ export const CreateInterest: React.FC<CreateInterestProps> = ({ modalState, inte
 
   return (
     <form className="newInterest" onSubmit={handleSubmit}>
+      { interestModified ? <h1>Edit interest</h1> : <h1>Create interest</h1>}
     <img className="newInterest__img"  src={image ? image : "src/assets/uploadImage.jpg"} alt="upload image" />
     <input className="newInterest__input" type="text" placeholder='Interest name' value={interestName} onChange={(e) => setInterestName(e.target.value)}/>
     <input 

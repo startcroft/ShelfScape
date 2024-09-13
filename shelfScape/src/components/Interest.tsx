@@ -16,6 +16,7 @@ export const Interest = () => {
     const [message, setMessage] = useState<{ text: string, type: 'success' | 'error' } | null | messageProps>(null)
     const navigate = useNavigate()
     const auth = useAuth()
+    const [isFirstRenderAuthMessage, setIsFirstRenderAuthMessage] = useState(true);
 
     useEffect(() => {
         const fetchInterest = async () => {
@@ -38,10 +39,12 @@ export const Interest = () => {
     }, [auth.data?._id, activeModal, updatedState]);
 
     useEffect(() => {
-        if(auth.message){
-            setMessage(auth.message);
+        if (auth.message && !isFirstRenderAuthMessage) {
+          setMessage(auth.message);
         }
-    }, [auth.message]);
+        setIsFirstRenderAuthMessage(false);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, [auth.message]);
 
     useEffect(() => {
       if(message) {

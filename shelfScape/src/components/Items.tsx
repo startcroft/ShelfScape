@@ -12,6 +12,7 @@ export const Items = () => {
     const auth = useAuth();
     const navigate = useNavigate();
     const [message, setMesagge] = useState< messageProps | null | {text: string , type: 'success' | 'error'} >();
+    const [isFirstRenderAuthMessage, setIsFirstRenderAuthMessage] = useState(true);
 
     useEffect(() => {
         const interestSelected = auth.selectedInterest;
@@ -38,11 +39,14 @@ export const Items = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [auth.selectedInterest, updateItems]);
 
-    useEffect (() => {
-      if(auth.message){
-        setMesagge(auth.message);
-      }
-    }, [auth.message]);
+    useEffect(() => {
+        if (auth.message && !isFirstRenderAuthMessage) {
+          setMesagge(auth.message);
+        }
+        setIsFirstRenderAuthMessage(false);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, [auth.message]);
+      
 
     useEffect(() => {
        if(message){
@@ -76,7 +80,7 @@ export const Items = () => {
         })
         if(response.ok){
             setUpdateItems(prevState => !prevState);
-            setMesagge({text:'Item deleted', type:'success'});
+            auth.handleMesage('Item deleted', 'success');
         }
         else {
             setMesagge({text:'Item cannot be deleted', type:'error'});
